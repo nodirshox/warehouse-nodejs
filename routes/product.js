@@ -1,65 +1,14 @@
 var express = require("express");
 var router = express.Router();
+var product_controller = require('../controllers/productController');
 
+// Procut
+router.get('/', product_controller.find);
+router.get('/create', product_controller.create_get);
+router.post('/create', product_controller.create_post);
+router.get('/edit/:id', product_controller.edit_get);
+router.post('/edit/:id', product_controller.edit_post);
+router.get('/delete/:id', product_controller.delete_get);
+router.post('/delete/:id', product_controller.delete_post);
 
-var Product = require('../models/product/Product');
-
-// All links
-router.get('/', (req, res) => {
-    res.render('product/list');
-});
-
-
-// Add
-router.get('/add_product', (req, res) => {
-    res.render('product/item/add');
-});
-
-router.post('/add_product', (req, res) => {
-    var product = new Product(req.body);
-    product.save()
-    .then(item => {
-      res.redirect('/product/all_product');
-    })
-    .catch(err => {
-      res.status(500).render('404', { err });
-    });
-});
-
-
-// List
-router.get('/all_product', (req, res) => {
-  try {
-    Product.find({}).exec((err, products) => {
-      if (err) {
-        res.status(500).render('404', { err });
-      } else {
-        res.render('product/item/all', { products });
-      }
-    })
-  } catch (err) {
-    res.status(500).render('404', { err });
-  }
-});
-
-
-// Edit
-router.get('/item/:id/edit', (req, res) => {
-  try {
-    Product.findOne({ _id: req.params.id }).exec((err, product) => {
-      if (err) {
-        res.status(500).render('404', { err });
-      } else {
-        res.render('product/item/edit', { product });
-      }
-    })
-  } catch (err) {
-    res.status(500).render('404', { err });
-  }
-});
-
-router.post('/item/:id/edit', (req, res) => {
-  
-})
-
-module.exports = router
+module.exports = router;

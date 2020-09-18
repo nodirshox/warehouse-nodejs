@@ -1,9 +1,9 @@
-<%- include('../../base/header') %>
+<%- include('../base/header') %>
 
 <section class="content">
     <div class="container-fluid card p-3">
         <h2>Mahsulot qo'shish</h2>
-        <form action="/product/add_product" method="POST">
+        <form action="/product/create" method="POST">
             <div class="form-group">
                 <label>Nomi</label>
                 <input type="text" class="form-control" name="name" autocomplete="off" maxlength="128" required>
@@ -14,7 +14,7 @@
             </div>
             <div class="form-group">
                 <label>Narxi</label>
-                <input type="number" class="form-control" name="price" autocomplete="off" required>
+                <input type="number" class="form-control" name="buy_back_price" autocomplete="off" required>
             </div>
             <div class="form-group">
                 <label>Rasm uchun havola</label>
@@ -26,4 +26,4 @@
     </div>
 </section>
 
-<%- include('../../base/footer') %>
+<%- include('../base/footer') %>
