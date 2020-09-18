@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var app = express();
 app.use(express.static('public'));
 
-
 // Database
 mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
 mongoose.connection.once('open', () => {

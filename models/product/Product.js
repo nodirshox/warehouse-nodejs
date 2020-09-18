@@ -10,7 +10,7 @@ var productSchema = new Schema({
     description: {
         type: String
     },
-    price: {
+    buy_back_price: {
         type: Number,
         required: true
     },
