@@ -30,21 +30,21 @@ exports.create_post = (req, res) => {
     });
 }
 
-// Edit
-exports.edit_get = (req, res) => {
+// Update
+exports.update_get = (req, res) => {
 	try {
 		Product.findOne({ _id: req.params.id }).exec((err, product) => {
 			if (err) {
 				res.status(500).render('404', { err });
 			} else {
-				res.render('product/edit', { product });
+				res.render('product/update', { product });
 			}
 		})
 	} catch (err) {
 		res.status(500).render('404', { err });
 	}
 }
-exports.edit_post = (req, res) => {
+exports.update_post = (req, res) => {
     try {
 		Product.findOneAndUpdate({ _id: req.params.id }, { $set: req.body }, function (err, result) {
 			res.redirect('/product')

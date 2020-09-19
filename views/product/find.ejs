@@ -5,7 +5,9 @@
         <ol>
             <% products.map((product) => { %>
                 <li>
-                    <%= product.name %> <a href="/product/edit/<%= product._id%>"><i class="far fa-sm fa-edit"></i></a> | <a href="/product/delete/<%= product._id%>"><i class="fas fa-sm fa-trash-alt"></i></a><br />
+                    <%= product.name %> <a href="/product/update/<%= product._id%>"><i class="far fa-sm fa-edit"></i></a> | <a href="/product/delete/<%= product._id%>"><i class="fas fa-sm fa-trash-alt"></i></a><br />
+                    <p><%= product.description %></p>
+                    <p>Qayta xarid: <b><%= product.buy_back_price %>so'm</b></p>
                     <img src="<%= product.picture %>" alt="Picture" style="height: 150px; width: auto;">
                 </li>
             <% }) %>

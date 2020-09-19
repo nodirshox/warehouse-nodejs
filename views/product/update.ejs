@@ -3,7 +3,7 @@
 <section class="content">
     <div class="container-fluid card p-3">
         <h2>Mahsulotni o'zgartirish</h2>
-        <form action="/product/edit/<%= product._id %>" method="POST">
+        <form action="/product/update/<%= product._id %>" method="POST">
             <div class="form-group">
                 <label>Nomi</label>
                 <input type="text" class="form-control" name="name" autocomplete="off" maxlength="128" value="<%= product.name %>" required>
@@ -20,8 +20,8 @@
                 <label>Rasm uchun havola</label>
                 <input type="text" class="form-control" name="picture" autocomplete="off" value="<%= product.picture %>" required>
             </div>
-            <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Saqlash</button>
-            <a href="/product" class="btn btn-secondary"><i class="fas fa-angle-left"></i> Ortga</a>
+            <button type="submit" class="btn btn-success"><i class="fas fa-sm fa-save"></i> Saqlash</button>
+            <a href="/product" class="btn btn-secondary"><i class="fas fa-sm fa-angle-left"></i> Ortga</a>
         </form>
     </div>
 </section>

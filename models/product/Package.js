@@ -38,4 +38,4 @@ var packageSchema = new Schema({
     minipack: [ MinipackSchema ]
 });
 
-module.export = mongoose.model('Package', packageSchema);
+module.exports = mongoose.model('Package', packageSchema);
