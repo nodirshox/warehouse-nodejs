@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Types = mongoose.Schema.Types;
 
-var MinipackSchema = new Schema({
+var Mini_packSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -35,7 +35,7 @@ var packageSchema = new Schema({
             required: true
         }
     }],
-    minipack: [ MinipackSchema ]
+    mini_pack: [ Mini_packSchema ]
 });
 
 module.exports = mongoose.model('Package', packageSchema);

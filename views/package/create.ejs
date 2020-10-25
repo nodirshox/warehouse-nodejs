@@ -3,16 +3,16 @@
 <section class="content">
     <div class="container-fluid card p-3">
         <h2>Paket qo'shish</h2>
-        <form action="/product/create" method="POST">
+        <form action="/package/create" method="POST">
             <div class="form-group">
                 <label>Nomi</label>
-                <input type="text" class="form-control" name="name" autocomplete="off" maxlength="128" required>
+                <input type="text" class="form-control" name="name" autocomplete="off" required>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>To'plam</label>
-                        <input type="text" class="form-control" name="price" autocomplete="off">
+                        <input type="text" class="form-control" name="mini_pack" autocomplete="off">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -20,7 +20,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Mahsulot</label>
-                                <select class="form-control select2" style="width: 100%;">
+                                <select class="form-control select2"name="product" style="width: 100%;">
                                     <% products.map((product) => { %>
                                         <option><%= product.name %></option>
                                     <% }) %>
@@ -30,7 +30,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Soni</label>
-                                <input type="text" class="form-control" name="price" placeholder="0" autocomplete="off">
+                                <input type="text" class="form-control" name="product_quantity" placeholder="0" autocomplete="off">
                             </div>
                         </div>
                         <div class="col-md-2">

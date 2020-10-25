@@ -17,11 +17,5 @@ exports.create_get = (req, res) => {
 };
 
 exports.create_post = (req, res) => {
-	var package = new Package(req.body);
-    package.save().then(item => {
-    	res.redirect('/package/');
-    })
-    .catch(err => {
-    	res.status(500).render('404', { err });
-    });
+	console.log(req.body)
 };
