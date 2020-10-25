@@ -2,13 +2,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var productSchema = new Schema({
-    name: {
+    title: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     description: {
-        type: String
+        type: String,
+        default: ''
     },
     buy_back_price: {
         type: Number,
@@ -16,7 +16,7 @@ var productSchema = new Schema({
     },
     picture: {
         type: String,
-        required: true
+        default: ""
     }
 
 });

@@ -1,11 +1,10 @@
 require('dotenv').config();
 
 var express = require("express");
-var router = require('./routes/index');
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser');
+
 var app = express();
-app.use(express.static('public'));
 
 // Database
 mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
@@ -15,17 +14,26 @@ mongoose.connection.once('open', () => {
     console.log(`There is an error in connecting database: ${error}`);
 });
 
-
-app.set('views', 'views');
-app.set('view engine', 'ejs');
-
+app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/', router);
 
 
-var port = 8000;
+app.use('/api', require('./api/index.js'));
+
+
+app.use(function(err, req, res, next) {
+    console.log('environment ' + app.get('env'));
+    console.log('Error: ', err.message);
+    res.status(err.status || 500).json({
+        result: 'error',
+        message: err.message
+    });
+  });
+
+
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
-    console.log('Server stared');
+    console.log(`Server stared on http://localhost://${port}`, );
 });
