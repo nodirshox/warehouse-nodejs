@@ -1,0 +1,3 @@
+console.log("query => ?=id=", req.query)
+console.log("body data => {}", req.body)
+console.log("param => ../{some_id}", req.params)

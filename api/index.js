@@ -4,9 +4,13 @@ var router=express.Router();
 var productAPI = require('./product.js');
 
 /****  PRODUCT API ****/
-router.post('/product/create', productAPI.create);
+router.post('/product', productAPI.create);
+router.get('/product', productAPI.find);
+router.get('/product/:id', productAPI.get);
+router.post('/product/:id', productAPI.update);
+router.delete('/product/:id', productAPI.delete)
 
-router.use(function(req, res){
+router.use((req, res) => {
 	res.json({message:'you are requesting my api server'});
 });
 
