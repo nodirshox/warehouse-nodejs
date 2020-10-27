@@ -12,6 +12,8 @@ const productAPI = {
 		product.description = b.description;
 		product.buy_back_price = b.buy_back_price;
 		product.picture = b.picture;
+		product.created_at = new Date();
+		product.updated_at = new Date();
 
 		product.save(function(err, result){
 			if(err) return next(err);
@@ -19,17 +21,8 @@ const productAPI = {
 		});
 	},
 	find: (req, res, next) => {
-		Product.aggregate([
-			{ "$project": {
-					"_id": 0,
-					"id": "$_id",
-					"title": "$title",
-					"description": "$description",
-					"buy_back_price": "$buy_back_price",
-					"picture": "$picture"
-				}
-			}
-		]).exec((err, result) => {
+		Product.find({}).
+		exec((err, result) => {
 			if(err) return next(err);
 			if (!result) return next(new Error("Product is not found"))
 			return res.json({ products: result });
@@ -42,14 +35,7 @@ const productAPI = {
 		Product.findById(id).exec((err, result) => {
 			if(err) return next(err);
 			if (!result) return next(new Error("Product with ID '" + id + "' is not found"))
-			let product = {
-				id: result._id,
-				title: result.title,
-				description: result.description,
-				buy_back_price: result.buy_back_price,
-				picture: result.picture
-			}
-			return res.json({ result: "success", data: product });
+			return res.json({ result: "success", data: result });
 		});
 	},
 	update: (req, res, next) => {
@@ -62,7 +48,8 @@ const productAPI = {
 			product.title = b.title;
 			product.description = b.description;
 			product.buy_back_price = b.buy_back_price;
-			product.picture = b.picture;			
+			product.picture = b.picture;
+			product.updated_at = new Date();			
 
 			product.save((err, result) => {
 				if(err) return next(err);
@@ -76,7 +63,7 @@ const productAPI = {
 		Product.findByIdAndRemove(id, (err, result)=>{
 			if(err) return next(err);
 			if (!result) return next(new Error("Product with ID '" + id + "' is not found"));
-			res.json({ result: 'success', data: {} });
+			return res.json({ result: 'success', data: {} });
 		});
 	}
 }

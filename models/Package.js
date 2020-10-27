@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Types = mongoose.Schema.Types;
 
-var Mini_packSchema = new Schema({
-    name: {
+var miniPackSchema = new Schema({
+    title: {
         type: String,
         required: true
     },
@@ -16,12 +16,18 @@ var Mini_packSchema = new Schema({
             type: Number,
             required: true
         }
-    }]
-
+    }],
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date
+    }
 });
 
 var packageSchema = new Schema({
-    name: {
+    title: {
         type: String,
         required: true
     },
@@ -35,7 +41,14 @@ var packageSchema = new Schema({
             required: true
         }
     }],
-    mini_pack: [ Mini_packSchema ]
+    mini_pack: [ miniPackSchema ],
+    created_at: {
+        type: Date,
+        default: Date.now
+    },
+    updated_at: {
+        type: Date
+    }
 });
 
 module.exports = mongoose.model('Package', packageSchema);
