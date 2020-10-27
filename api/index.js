@@ -7,7 +7,7 @@ var productAPI = require('./product.js');
 router.post('/product', productAPI.create);
 router.get('/product', productAPI.find);
 router.get('/product/:id', productAPI.get);
-router.post('/product/:id', productAPI.update);
+router.put('/product/:id', productAPI.update);
 router.delete('/product/:id', productAPI.delete)
 
 router.use((req, res) => {

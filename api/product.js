@@ -30,19 +30,26 @@ const productAPI = {
 				}
 			}
 		]).exec((err, result) => {
-			console.log(result)
 			if(err) return next(err);
 			if (!result) return next(new Error("Product is not found"))
 			return res.json({ products: result });
 		});
 	},
 	get: (req, res, next) => {
-		if(!req.params.id) return next(new Error("Product ID is required"));
+		const id = req.params.id;
+		if(!id) return next(new Error("Product ID is required"));
 
-		Product.findById(req.params.id).exec((err, result) => {
+		Product.findById(id).exec((err, result) => {
 			if(err) return next(err);
-			if (!result) return next(new Error("Product is not found"))
-			return res.json({ result: "success", data: result });
+			if (!result) return next(new Error("Product with ID '" + id + "' is not found"))
+			let product = {
+				id: result._id,
+				title: result.title,
+				description: result.description,
+				buy_back_price: result.buy_back_price,
+				picture: result.picture
+			}
+			return res.json({ result: "success", data: product });
 		});
 	},
 	update: (req, res, next) => {
@@ -64,10 +71,11 @@ const productAPI = {
 		});
 	},
 	delete: (req,res,next) => {
-		if(!req.params.id) return next(new Error("Product ID is required"));
-		Product.findByIdAndRemove(req.params.id, (err, result)=>{
+		const id = req.params.id;
+		if(!id) return next(new Error("Product ID is required"));
+		Product.findByIdAndRemove(id, (err, result)=>{
 			if(err) return next(err);
-			if (!result) return next(new Error("Product is not found"))
+			if (!result) return next(new Error("Product with ID '" + id + "' is not found"));
 			res.json({ result: 'success', data: {} });
 		});
 	}
