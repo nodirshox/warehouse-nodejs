@@ -56,10 +56,10 @@ const productAPI = {
 			if (!product) return next(new Error("Product with ID '" + id + "' is not found"));
 
 			product.title = b.title;
-			product.description = b.description;
+			product.description = b.description ? b.description : product.description;
 			product.buy_back_price = b.buy_back_price;
-			product.picture = b.picture;
-			product.updated_at = new Date();			
+			product.picture = b.picture ? b.picture : product.picture;
+			product.updated_at = new Date();
 
 			product.save((err, result) => {
 				if(err) return next(err);
@@ -74,11 +74,11 @@ const productAPI = {
 		const id = req.params.id;
 		if(!id) return next(new Error("Product ID is required"));
 
-		Product.findByIdAndRemove(id, (err, result)=>{
+		Product.findByIdAndRemove(id, (err, result) => {
 			if(err) return next(err);
 			if (!result) return next(new Error("Product with ID '" + id + "' is not found"));
 
-			return res.json({ 
+			return res.json({
 				result: 'success',
 				data: {} 
 			});
