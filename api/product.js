@@ -15,16 +15,18 @@ const productAPI = {
 		product.created_at = new Date();
 		product.updated_at = new Date();
 
-		product.save(function(err, result){
+		product.save((err, result) => {
 			if(err) return next(err);
-			return res.json({ result:'success', data: { product_id: result._id }});
+			return res.json({ 
+				result: 'success',
+				data: { product_id: result._id }
+			});
 		});
 	},
 	find: (req, res, next) => {
 		Product.find({}).
 		exec((err, result) => {
 			if(err) return next(err);
-			if (!result) return next(new Error("Product is not found"))
 			return res.json({ products: result });
 		});
 	},
@@ -34,17 +36,25 @@ const productAPI = {
 
 		Product.findById(id).exec((err, result) => {
 			if(err) return next(err);
-			if (!result) return next(new Error("Product with ID '" + id + "' is not found"))
-			return res.json({ result: "success", data: result });
+			if (!result) return next(new Error("Product with ID '" + id + "' is not found"));
+			return res.json({ 
+				result: "success",
+				data: result 
+			});
 		});
 	},
 	update: (req, res, next) => {
 		const b = req.body;
-		if(!req.params.id) return next(new Error("Product ID is required"));
+		const id = req.params.id;
+
+		if(!id) return next(new Error("Product ID is required"));
 		if(!b.title) return next(new Error("Product title is required"));
 		if(!b.buy_back_price) return next(new Error("Product buy back price is required"));
 
-		Product.findById(req.params.id, (err, product) => {
+		Product.findById(id, (err, product) => {
+			if(err) return next(err);
+			if (!product) return next(new Error("Product with ID '" + id + "' is not found"));
+
 			product.title = b.title;
 			product.description = b.description;
 			product.buy_back_price = b.buy_back_price;
@@ -53,17 +63,25 @@ const productAPI = {
 
 			product.save((err, result) => {
 				if(err) return next(err);
-				return res.json({ result:'success', data: { product_id: result._id }});
+				return res.json({ 
+					result: 'success',
+					data: { product_id: result._id }
+				});
 			});
 		});
 	},
-	delete: (req,res,next) => {
+	delete: (req, res, next) => {
 		const id = req.params.id;
 		if(!id) return next(new Error("Product ID is required"));
+
 		Product.findByIdAndRemove(id, (err, result)=>{
 			if(err) return next(err);
 			if (!result) return next(new Error("Product with ID '" + id + "' is not found"));
-			return res.json({ result: 'success', data: {} });
+
+			return res.json({ 
+				result: 'success',
+				data: {} 
+			});
 		});
 	}
 }

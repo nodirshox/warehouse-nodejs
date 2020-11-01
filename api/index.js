@@ -1,17 +1,17 @@
-var express=require('express');
-var router=express.Router();
+var express = require('express');
+var router = express.Router();
 
 var productAPI = require('./product.js');
-//ar packageAPI = require('./package.js');
+//var packageAPI = require('./package.js');
 
-/****  PRODUCT API ****/
+// Product API
 router.post('/product', productAPI.create);
 router.get('/product', productAPI.find);
 router.get('/product/:id', productAPI.get);
 router.put('/product/:id', productAPI.update);
 router.delete('/product/:id', productAPI.delete)
 
-/***  PACKAGE API  ***/
+// Package API
 /*
 router.post('/package', packageAPI.create);
 router.get('/package', packageAPI.find);
@@ -21,7 +21,9 @@ router.delete('/package/:id', packageAPI.delete)
 */
 
 router.use((req, res) => {
-	res.json({message:'you are requesting my api server'});
+	res.json({ 
+		message:'Hey brother, it is API Gateway!' 
+	});
 });
 
-module.exports=router;
+module.exports = router;
