@@ -1,6 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-var Types = mongoose.Schema.Types;
 
 var miniPackSchema = new Schema({
     title: {
@@ -9,12 +8,18 @@ var miniPackSchema = new Schema({
     },
     product_quantity: [{
         product: {
-            type: Types.ObjectId,
-            ref: 'Product'
+            type: Schema.Types.ObjectId,
+            ref: "Product",
+            required: true
         },
         quantity: {
             type: Number,
-            required: true
+            required: true,
+            min: [0, "Product quantity must be positive"],
+            validate: {
+                validator: Number.isInteger,
+                message: '{VALUE} is not an integer value'
+            }
         }
     }],
     created_at: {
@@ -31,17 +36,19 @@ var packageSchema = new Schema({
         type: String,
         required: true
     },
-    product_price: [{
+    product_prices: [{
         product: {
-            type: Types.ObjectId,
-            ref: 'Product'
+            type: Schema.Types.ObjectId,
+            ref: "Product",
+            required: true
         },
         price: {
             type: Number,
-            required: true
+            required: true,
+            min: [0, "Product price must be positive"]
         }
     }],
-    mini_pack: [ miniPackSchema ],
+    mini_packs: [ miniPackSchema ],
     created_at: {
         type: Date,
         default: Date.now
@@ -51,4 +58,4 @@ var packageSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Package', packageSchema);
+module.exports = mongoose.model("Package", packageSchema);

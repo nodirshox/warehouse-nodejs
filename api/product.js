@@ -5,8 +5,8 @@ const productAPI = {
 	create: (req, res, next) => {
 		const b = req.body;
 		if(!b.title) return next(new Error("Product title is required"));
-		if(b.repurchase_price <= 0) return next(new Error("Product repurchase price price is must be positive"));
-		if(!b.repurchase_price) return next(new Error("Product repurchase price price is required"));
+		if(b.repurchase_price <= 0) return next(new Error("Product repurchase price is must be positive"));
+		if(!b.repurchase_price) return next(new Error("Product repurchase price is required"));
 
 		var product = new Product;
 		product.title = b.title;

@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var productSchema = new Schema({
@@ -8,12 +8,12 @@ var productSchema = new Schema({
     },
     description: {
         type: String,
-        default: ''
+        default: ""
     },
     repurchase_price: {
         type: Number,
         required: true,
-        min: [0, 'Product price must be positive']
+        min: [0, "Product price must be positive"]
     },
     picture: {
         type: String,
@@ -29,4 +29,4 @@ var productSchema = new Schema({
 
 });
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model("Product", productSchema);
