@@ -21,9 +21,7 @@ router.delete('/package/:id', packageAPI.delete)
 */
 
 router.use((req, res) => {
-	res.json({ 
-		message:'Hey brother, it is API Gateway!' 
-	});
+	res.json({ message: 'Hey brother, it is API Gateway!' });
 });
 
 module.exports = router;

@@ -10,9 +10,10 @@ var productSchema = new Schema({
         type: String,
         default: ''
     },
-    buy_back_price: {
+    repurchase_price: {
         type: Number,
-        required: true
+        required: true,
+        min: [0, 'Product price must be positive']
     },
     picture: {
         type: String,

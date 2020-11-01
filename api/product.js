@@ -5,13 +5,14 @@ const productAPI = {
 	create: (req, res, next) => {
 		const b = req.body;
 		if(!b.title) return next(new Error("Product title is required"));
-		if(!b.buy_back_price) return next(new Error("Product buy back price is required"));
+		if(b.repurchase_price <= 0) return next(new Error("Product repurchase price price is must be positive"));
+		if(!b.repurchase_price) return next(new Error("Product repurchase price price is required"));
 
 		var product = new Product;
 		product.title = b.title;
-		product.description = b.description;
-		product.buy_back_price = b.buy_back_price;
-		product.picture = b.picture;
+		product.description = b.description ? b.description : "";
+		product.repurchase_price = b.repurchase_price;
+		product.picture = b.picture ? b.picture : "";
 		product.created_at = new Date();
 		product.updated_at = new Date();
 
@@ -49,7 +50,8 @@ const productAPI = {
 
 		if(!id) return next(new Error("Product ID is required"));
 		if(!b.title) return next(new Error("Product title is required"));
-		if(!b.buy_back_price) return next(new Error("Product buy back price is required"));
+		if(b.repurchase_price <= 0) return next(new Error("Product repurchase price is must be positive"));
+		if(!b.repurchase_price) return next(new Error("Product repurchase price is required"));
 
 		Product.findById(id, (err, product) => {
 			if(err) return next(err);
@@ -57,7 +59,7 @@ const productAPI = {
 
 			product.title = b.title;
 			product.description = b.description ? b.description : product.description;
-			product.buy_back_price = b.buy_back_price;
+			product.repurchase_price = b.repurchase_price;
 			product.picture = b.picture ? b.picture : product.picture;
 			product.updated_at = new Date();
 
@@ -80,7 +82,7 @@ const productAPI = {
 
 			return res.json({
 				result: 'success',
-				data: {} 
+				data: {}
 			});
 		});
 	}
