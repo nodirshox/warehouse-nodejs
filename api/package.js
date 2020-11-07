@@ -22,8 +22,8 @@ const packageAPI = {
 		});
 	},
 	find: (req, res, next) => {
-        Package.find({}).
-        populate(["product"]).
+		Package.find({}).
+        populate("product_prices.product").
 		exec((err, result) => {
 			if(err) return next(err);
 			return res.json({ packages: result });
@@ -33,7 +33,9 @@ const packageAPI = {
 		const id = req.params.id;
 		if(!id) return next(new Error("Package ID is required"));
 
-		Package.findById(id).exec((err, result) => {
+		Package.findById(id).
+		populate("product_prices.product").
+		exec((err, result) => {
 			if(err) return next(err);
 			if (!result) return next(new Error("Package with ID '" + id + "' is not found"));
 			return res.json({ 
@@ -48,17 +50,13 @@ const packageAPI = {
 
 		if(!id) return next(new Error("Package ID is required"));
 		if(!b.title) return next(new Error("Package title is required"));
-		if(b.repurchase_price <= 0) return next(new Error("Package repurchase price is must be positive"));
-		if(!b.repurchase_price) return next(new Error("Package repurchase price is required"));
 
 		Package.findById(id, (err, package) => {
 			if(err) return next(err);
 			if (!package) return next(new Error("Package with ID '" + id + "' is not found"));
 
 			package.title = b.title;
-			package.description = b.description ? b.description : package.description;
-			package.repurchase_price = b.repurchase_price;
-			package.picture = b.picture ? b.picture : package.picture;
+			package.product_prices = b.product_prices ? b.product_prices : package.product_prices;
 			package.updated_at = new Date();
 
 			package.save((err, result) => {
