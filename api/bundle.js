@@ -112,27 +112,24 @@ const bundleAPI = {
 		});
 	},
 	delete: (req, res, next) => {
-		logger.debug("Package delete request", {
-			params: req.params,
-			label: "package"
-		});
+		let package_id = req.params.package_id;
+		let bundle_id = req.params.id;
 
-		const id = req.params.id;
-		if(!id) return next(new Error("Package ID is required"));
+		if(!package_id) return next(new Error("Package ID is required"));
+		if(!bundle_id) return next(new Error("Bundle ID is required"));
 
-		Package.findByIdAndRemove(id, (err, result) => {
+		Package.findById(package_id, (err, result) => {
 			if(err) return next(err);
-			if (!result) return next(new Error("Package with ID " + id + " is not found"));
+			if (!result) return next(new Error("Package with ID " + package_id + " is not found"));
+			
+			result.bundles.pull(bundle_id);
+			result.updated_at = Date.now();
 
-			logger.debug("Package delete response", {
-				result: result,
-				label: "package"
-			});
-
-			return res.json({
-				result: 'success',
-				data: {}
-			});
+			result.save((err, result) => {
+				if(err) return next(err);
+				logger.debug("Bundle delete response", { result: result, label: "bundle" });
+				return res.json({ result: 'success', data: {} });
+			})
 		});
 	}
 }

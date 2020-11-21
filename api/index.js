@@ -24,6 +24,7 @@ router.post('/package/:package_id/bundle', bundleAPI.create);
 router.get('/package/:package_id/bundle', bundleAPI.find);
 router.get('/package/:package_id/bundle/:id', bundleAPI.get);
 router.put('/package/:package_id/bundle/:id', bundleAPI.update);
+router.delete('/package/:package_id/bundle/:id', bundleAPI.delete);
 
 router.use((req, res) => {
 	res.json({ message: 'Hey brother, it is API Gateway!' });
