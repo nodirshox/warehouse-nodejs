@@ -4,11 +4,6 @@ const logger = require("../config/logger");
 
 const packageAPI = {
 	create: (req, res, next) => {
-		logger.debug("Package create request", {
-			body: req.body,
-			label: "package"
-		});
-
 		const b = req.body;
 
 		if(!b.title) return next(new Error("Package title is required"));
@@ -16,17 +11,14 @@ const packageAPI = {
 		var package = new Package;
 		package.title = b.title;
         package.product_prices = b.product_prices ? b.product_prices : [];
-        package.mini_packs = [];
+        package.bundles = [];
 		package.created_at = new Date();
 		package.updated_at = new Date();
 
 		package.save((err, result) => {
 			if(err) return next(err);
 			
-			logger.debug("Package with ID " + result._id + " is created", {
-				result: result,
-				label: "package"
-			});
+			logger.debug("Package with ID " + result._id + " is created", { result: result, label: "package" });
 			
 			return res.json({ 
 				result: 'success',
@@ -43,11 +35,6 @@ const packageAPI = {
 		});
 	},
 	get: (req, res, next) => {
-		logger.debug("Package get request", {
-			params: req.params,
-			label: "package"
-		});
-		
 		const id = req.params.id;
 		if(!id) return next(new Error("Package ID is required"));
 
@@ -57,10 +44,7 @@ const packageAPI = {
 			if(err) return next(err);
 			if (!result) return next(new Error("Package with ID " + id + " is not found"));
 
-			logger.debug("Package get response", {
-				result: result,
-				label: "package"
-			});
+			logger.debug("Package get response", { result: result, label: "package" });
 
 			return res.json({ 
 				result: "success",
@@ -69,12 +53,6 @@ const packageAPI = {
 		});
 	},
 	update: (req, res, next) => {
-		logger.debug("Paclage update request", {
-			params: req.params,
-			body: req.body,
-			label: "package"
-		});
-
 		const b = req.body;
 		const id = req.params.id;
 
@@ -92,10 +70,7 @@ const packageAPI = {
 			package.save((err, result) => {
 				if(err) return next(err);
 
-				logger.debug("Package update response", {
-					result: result,
-					label: "package"
-				});
+				logger.debug("Package update response", { result: result, label: "package" });
 
 				return res.json({ 
 					result: 'success',
@@ -105,11 +80,6 @@ const packageAPI = {
 		});
 	},
 	delete: (req, res, next) => {
-		logger.debug("Package delete request", {
-			params: req.params,
-			label: "package"
-		});
-
 		const id = req.params.id;
 		if(!id) return next(new Error("Package ID is required"));
 
@@ -117,10 +87,7 @@ const packageAPI = {
 			if(err) return next(err);
 			if (!result) return next(new Error("Package with ID " + id + " is not found"));
 
-			logger.debug("Package delete response", {
-				result: result,
-				label: "package"
-			});
+			logger.debug("Package delete response", { result: result, label: "package" });
 
 			return res.json({
 				result: 'success',

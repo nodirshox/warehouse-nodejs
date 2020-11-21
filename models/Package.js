@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-var miniPackSchema = new Schema({
+var bundleSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -48,7 +48,7 @@ var packageSchema = new Schema({
             min: [0, "Product price must be positive"]
         }
     }],
-    mini_packs: [ miniPackSchema ],
+    bundles: [ bundleSchema ],
     created_at: {
         type: Date,
         default: Date.now

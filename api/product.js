@@ -4,11 +4,6 @@ const logger = require("../config/logger");
 
 const productAPI = {
 	create: (req, res, next) => {
-		logger.debug("Product create request", {
-			body: req.body,
-			label: "product"
-		});
-
 		const b = req.body;
 
 		if(!b.title) return next(new Error("Product title is required"));
@@ -26,10 +21,7 @@ const productAPI = {
 		product.save((err, result) => {
 			if(err) return next(err);
 			
-			logger.debug("Product with ID " + result._id + " is created", {
-				result: result,
-				label: "product"
-			});
+			logger.debug("Product with ID " + result._id + " is created", { result: result, label: "product" });
 			
 			return res.json({ 
 				result: 'success',
@@ -45,11 +37,6 @@ const productAPI = {
 		});
 	},
 	get: (req, res, next) => {
-		logger.debug("Product get request", {
-			params: req.params,
-			label: "product"
-		});
-
 		const id = req.params.id;
 		if(!id) return next(new Error("Product ID is required"));
 
@@ -57,10 +44,7 @@ const productAPI = {
 			if(err) return next(err);
 			if (!result) return next(new Error("Product with ID " + id + " is not found"));
 			
-			logger.debug("Product get response", {
-				result: result,
-				label: "product"
-			});
+			logger.debug("Product get response", { result: result, label: "product" });
 			
 			return res.json({ 
 				result: "success",
@@ -68,13 +52,7 @@ const productAPI = {
 			});
 		});
 	},
-	update: (req, res, next) => {
-		logger.debug("Product update request", {
-			params: req.params,
-			body: req.body,
-			label: "product"
-		});
-		
+	update: (req, res, next) => {		
 		const b = req.body;
 		const id = req.params.id;
 
@@ -96,10 +74,7 @@ const productAPI = {
 			product.save((err, result) => {
 				if(err) return next(err);
 				
-				logger.debug("Product update response", {
-					result: result,
-					label: "product"
-				});
+				logger.debug("Product update response", { result: result, label: "product" });
 
 				return res.json({
 					result: 'success',
@@ -109,11 +84,6 @@ const productAPI = {
 		});
 	},
 	delete: (req, res, next) => {
-		logger.debug("Product delete request", {
-			params: req.params,
-			label: "product"
-		});
-		
 		const id = req.params.id;
 		if(!id) return next(new Error("Product ID is required"));
 
@@ -121,10 +91,7 @@ const productAPI = {
 			if(err) return next(err);
 			if (!result) return next(new Error("Product with ID " + id + " is not found"));
 			
-			logger.debug("Product delete response", {
-				result: result,
-				label: "product"
-			});
+			logger.debug("Product delete response", { result: result, label: "product" });
 
 			return res.json({
 				result: 'success',
