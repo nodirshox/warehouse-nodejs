@@ -1,14 +1,7 @@
 var mongoose = require("mongoose");
-var uuid = require("uuid");
 var Schema = mongoose.Schema;
 
 var productSchema = new Schema({
-    _id: { 
-		type: String,
-		default: function genUUID() {
-			return uuid.v4()
-		}
-	},
     title: {
         type: String,
         required: true
